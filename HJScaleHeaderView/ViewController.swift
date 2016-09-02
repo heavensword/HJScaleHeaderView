@@ -18,7 +18,7 @@ class ViewController: UIViewController, HJScaledScrollViewDelegate {
         super.viewDidLoad()
         self.headerViewHeight = CGRectGetHeight(self.headerView.frame)
         self.navigationController?.navigationBarHidden = true
-        var contentSize:CGSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 1800)
+        let contentSize:CGSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 1800)
         self.scrollView.contentSize = contentSize
         self.scrollView.scollDelegate = self
     }

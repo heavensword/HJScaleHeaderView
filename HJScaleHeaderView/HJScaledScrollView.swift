@@ -15,7 +15,7 @@ import UIKit
 
 
 class HJScaledScrollView: UIScrollView {
-
+    
     var _previousContentOffset:CGPoint?
     var _scollDelegate:HJScaledScrollViewDelegate?
     var _expandHeight:CGFloat!
@@ -47,7 +47,7 @@ class HJScaledScrollView: UIScrollView {
     }
     
     deinit {
-        self.removeObserver(self, forKeyPath: "contentOffset")        
+        self.removeObserver(self, forKeyPath: "contentOffset")
     }
     
     override func layoutSubviews() {
@@ -57,7 +57,7 @@ class HJScaledScrollView: UIScrollView {
         _headerView.frame = frame
         
     }
-
+    
     init(frame:CGRect, headerView:UIView) {
         super.init(frame: frame)
         self.frame = frame
@@ -65,18 +65,16 @@ class HJScaledScrollView: UIScrollView {
         self.addObserver(self, forKeyPath: "contentOffset", options:NSKeyValueObservingOptions.New, context: nil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         _previousContentOffset = CGPointZero
         self.addObserver(self, forKeyPath: "contentOffset", options:NSKeyValueObservingOptions.New, context: nil)
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
-            NSLog("%@", object as UIScrollView)
-            NSLog("%@", change as Dictionary)
-            let scrollView = object as UIScrollView
-            let scrollDown:Bool = _previousContentOffset!.y - scrollView.contentOffset.y >= 0
+            let scrollView = object as! UIScrollView
+//            let scrollDown:Bool = _previousContentOffset!.y - scrollView.contentOffset.y >= 0
             _previousContentOffset = scrollView.contentOffset
             if scrollView.contentOffset.y - 20 <= 0 {
                 self.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -93,7 +91,7 @@ class HJScaledScrollView: UIScrollView {
                     frame.origin.y = scrollView.contentOffset.y
                     frame.size.height = 64
                     _headerView.frame = frame
-
+                    
                 }
             }
         }
